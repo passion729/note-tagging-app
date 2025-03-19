@@ -23,7 +23,7 @@ function App() {
                     <Images images={ testImages } />
                     <NoteContent content={ testContent } />
                     <div className="w-3/5 h-10">
-                        <TagButton />
+                        <TagButton radio_name="note_tag" />
                     </div>
                     <div className="self-center">
                         <p>1 of 10</p>

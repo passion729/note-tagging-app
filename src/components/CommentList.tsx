@@ -15,7 +15,7 @@ const CommentList = ({ comments }: Props) => {
                                 { comment.content }
                             </div>
 
-                            <TagButton />
+                            <TagButton radio_name={"comment_tag"+comment.id} />
                         </div>
                         <div className="divider my-[1px]" />
                     </li>
