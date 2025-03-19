@@ -5,11 +5,16 @@ import NoteContent from "./components/NoteContent.tsx";
 import Images from "./components/Images.tsx";
 import TagButton from "./components/TagButton.tsx";
 import CommentList from "./components/CommentList.tsx";
+import ThemeSwitcher from "./components/ThemeSwitcher.tsx";
 
 function App() {
     return (
         <div className="m-8">
-            <Title title={ testTitle.title } tags={ testTitle.tags }/>
+            <div className="flex justify-between items-center">
+                <Title title={ testTitle.title } tags={ testTitle.tags }/>
+                <ThemeSwitcher />
+            </div>
+
             <div className="divider my-[4px]"/>
 
             <div className="flex flex-row">
