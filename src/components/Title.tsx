@@ -6,10 +6,10 @@ interface Props {
 const Title = ({ title, tags }: Props) => {
     return (
         <div className="flex flex-col">
-            <text className="text-3xl font-bold">{ title }</text>
+            <p className="text-3xl font-bold">{ title }</p>
             <div className="flex flex-row flex-wrap gap-2">
                 { tags.map((tag) => (
-                    <p className="text-gray-500">
+                    <p key={tag} className="text-gray-500">
                         { "#" + tag }
                     </p>
                 )) }
