@@ -6,6 +6,7 @@ import Images from "./components/Images.tsx";
 import TagButton from "./components/TagButton.tsx";
 import CommentList from "./components/CommentList.tsx";
 import ThemeSwitcher from "./components/ThemeSwitcher.tsx";
+import NoteSwitcher from "./components/NoteSwitcher.tsx";
 
 function App() {
     return (
@@ -24,8 +25,9 @@ function App() {
                     <TagButton />
                 </div>
                 <div className="divider divider-horizontal" />
-                <div className="w-1/2">
+                <div className="w-1/2 justify-items-end">
                     <CommentList comments={testComment} />
+                    <NoteSwitcher />
                 </div>
             </div>
 
