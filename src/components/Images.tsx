@@ -4,7 +4,7 @@ interface Props {
 
 const Images = ({images}: Props) => {
     return (
-        <div className="place-items-center">
+        <div className="place-items-center space-y-4">
             <div className="flex flex-row space-x-4">
                 { images.map((image) => (
                     <div key={image.id} className="aspect-3/4 rounded-lg overflow-hidden">
