@@ -1,14 +1,16 @@
-import './App.css'
+import './App.css';
 import Title from "./components/Title.tsx";
-import { testData } from "./testData.ts";
+import { testContent, testTitle } from "./testData.ts";
+import NoteContent from "./components/NoteContent.tsx";
 
 function App() {
     return (
         <div className="m-8">
-            <Title title={testData.title} tags={testData.tags} />
-            <div className="divider my-[4px]" />
+            <Title title={ testTitle.title } tags={ testTitle.tags }/>
+            <div className="divider my-[4px]"/>
+            <NoteContent content={ testContent }/>
         </div>
-    )
+    );
 }
 
-export default App
+export default App;
