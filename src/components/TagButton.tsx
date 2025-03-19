@@ -2,7 +2,7 @@ import { FaRegQuestionCircle, FaRegThumbsDown, FaRegThumbsUp } from "react-icons
 
 const TagButton = () => {
     return (
-        <div className="flex gap-4 w-1/2">
+        <div className="flex gap-2">
             <div className="btn btn-primary flex-auto">
                 <FaRegThumbsDown />
             </div>

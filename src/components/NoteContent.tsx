@@ -4,7 +4,7 @@ interface Props {
 
 const NoteContent = ({ content }: Props) => {
     return (
-        <article className="text-wrap">
+        <article className="text-wrap leading-7">
             <p>{ content }</p>
         </article>
     );
