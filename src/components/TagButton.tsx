@@ -1,14 +1,17 @@
 import { FaRegQuestionCircle, FaRegThumbsDown, FaRegThumbsUp } from "react-icons/fa";
 
 interface Props {
-    radio_name: string;
+    value: string;
+    onChange: (value: string) => void;
 }
 
-const TagButton = ({radio_name}: Props) => {
+const TagButton = ({ value, onChange }: Props) => {
     return (
         <div className="flex items-center space-x-2 h-full">
             <label className="flex items-center cursor-pointer flex-auto h-full">
-                <input type="radio" name={radio_name} className="hidden peer" />
+                <input type="radio" value="disagree" className="hidden peer"
+                       checked={value === "disagree"}
+                       onChange={(event) => onChange(event.target.value)} />
                 <div className="p-2 rounded-lg flex-auto h-full
                 content-center justify-items-center bg-gray-500 peer-checked:bg-red-400">
                     <FaRegThumbsDown />
@@ -16,7 +19,9 @@ const TagButton = ({radio_name}: Props) => {
             </label>
 
             <label className="flex items-center cursor-pointer flex-auto h-full">
-                <input type="radio" name={radio_name} className="hidden peer" />
+                <input type="radio" value="neutral" className="hidden peer"
+                       checked={value === "neutral"}
+                       onChange={(event) => onChange(event.target.value)} />
                 <div className="p-2 rounded-lg flex-auto h-full
                 content-center justify-items-center bg-gray-500 peer-checked:bg-blue-400">
                     <FaRegQuestionCircle />
@@ -24,14 +29,15 @@ const TagButton = ({radio_name}: Props) => {
             </label>
 
             <label className="flex items-center cursor-pointer flex-auto h-full">
-                <input type="radio" name={radio_name} className="hidden peer" />
+                <input type="radio" value="agree" className="hidden peer"
+                       checked={value === "agree"}
+                       onChange={(event) => onChange(event.target.value)} />
                 <div className="p-2 rounded-lg flex-auto h-full
                     content-center justify-items-center bg-gray-500 peer-checked:bg-green-400">
                     <FaRegThumbsUp />
                 </div>
             </label>
         </div>
-
     );
 };
 
