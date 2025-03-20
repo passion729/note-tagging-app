@@ -1,5 +1,6 @@
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { Button } from "./ui/button";
-import { ChevronLeft, ChevronRight, Send } from "lucide-react";
+import { Send } from "lucide-react";
 
 interface NoteSwitcherProps {
     previousNoteHandler: () => void;
@@ -7,7 +8,6 @@ interface NoteSwitcherProps {
     submitHandler: () => void;
     currentId: number;
     totalNum: number;
-    currentCommentsCount: number;
 }
 
 export function NoteSwitcher({
@@ -16,24 +16,21 @@ export function NoteSwitcher({
     submitHandler,
     currentId,
     totalNum,
-    currentCommentsCount
 }: NoteSwitcherProps) {
     return (
-        <div className="flex items-center gap-4">
+        <div className="flex items-center">
             <Button
                 variant="outline"
                 size="icon"
                 onClick={previousNoteHandler}
                 disabled={currentId === 1}
             >
-                <ChevronLeft className="h-4 w-4" />
+                <IoIosArrowBack className="h-4 w-4" />
             </Button>
-            <div className="flex items-center gap-2">
-                <span className="text-sm font-medium">评论数：{currentCommentsCount}</span>
+            <div className="flex items-center">
+                <span className="text-sm font-medium w-8 text-center">{currentId}</span>
                 <span className="text-sm text-muted-foreground">/</span>
-                <span className="text-sm font-medium">笔记 {currentId}</span>
-                <span className="text-sm text-muted-foreground">/</span>
-                <span className="text-sm font-medium">{totalNum}</span>
+                <span className="text-sm font-medium w-8 text-center">{totalNum}</span>
             </div>
             <Button
                 variant="outline"
@@ -41,13 +38,14 @@ export function NoteSwitcher({
                 onClick={nextNoteHandler}
                 disabled={currentId === totalNum}
             >
-                <ChevronRight className="h-4 w-4" />
+                <IoIosArrowForward className="h-4 w-4" />
             </Button>
             <Button
                 variant="default"
-                size="icon"
                 onClick={submitHandler}
+                className="ml-4 bg-primary hover:bg-primary/90 text-white dark:text-white flex items-center gap-2"
             >
+                <span>提交</span>
                 <Send className="h-4 w-4" />
             </Button>
         </div>

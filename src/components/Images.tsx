@@ -1,35 +1,74 @@
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useState } from "react";
+import { CachedImage } from "./CachedImage";
+import { Button } from "./ui/button";
+import ImagePreview from "./ImagePreview";
 
-interface Props {
+interface ImagesProps {
     images: string[];
 }
 
-const Images = ({ images }: Props) => {
-    const [imageId, setImageId] = useState(0);
+const IMAGES_PER_PAGE = 3;
+
+export default function Images({ images }: ImagesProps) {
+    const [currentPage, setCurrentPage] = useState(0);
+    const [previewImage, setPreviewImage] = useState<string | null>(null);
+    const totalPages = Math.ceil(images.length / IMAGES_PER_PAGE);
+
+    const startIndex = currentPage * IMAGES_PER_PAGE;
+    const endIndex = Math.min(startIndex + IMAGES_PER_PAGE, images.length);
+    const currentImages = images.slice(startIndex, endIndex);
 
     return (
-        <div className="flex flex-col items-center space-y-4">
-            <div className="flex flex-row space-x-4">
-                { images.map((image, id) => (
-                    <div key={ id } className="aspect-3/4 rounded-lg overflow-hidden h-60 ">
-                        <img src={ image } alt="" className="h-full object-cover" />
+        <div className="flex flex-col h-full">
+            <div className="flex-1 grid grid-cols-3 gap-4">
+                {currentImages.map((image, id) => (
+                    <div
+                        key={id}
+                        className="relative aspect-[3/4] rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity shadow-lg hover:shadow-xl"
+                        onClick={() => setPreviewImage(image)}
+                    >
+                        <CachedImage
+                            src={image}
+                            alt={`图片 ${startIndex + id + 1}`}
+                            className="absolute inset-0 w-full h-full object-cover"
+                        />
                     </div>
-                )) }
+                ))}
             </div>
-            <div className="flex flex-row space-x-2 items-center">
-                <button className="btn btn-soft rounded-lg"
-                onClick={() => {
-                    if (imageId > 0) setImageId(imageId - 1)
-                }}><IoIosArrowBack /></button>
-                <label className="flex justify-center w-6">{ imageId+1 + "/" + images.length }</label>
-                <button className="btn btn-soft rounded-lg"
-                onClick={() => {
-                    if (imageId < images.length - 1) setImageId(imageId + 1)
-                }}><IoIosArrowForward /></button>
+            <div className="flex items-center justify-center mt-4">
+                <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => {
+                        if (currentPage > 0) setCurrentPage(currentPage - 1);
+                    }}
+                    disabled={currentPage === 0 || totalPages <= 1}
+                >
+                    <IoIosArrowBack className="h-4 w-4" />
+                </Button>
+                <div className="flex items-center">
+                    <span className="text-sm font-medium w-8 text-center">{currentPage + 1}</span>
+                    <span className="text-sm text-muted-foreground">/</span>
+                    <span className="text-sm font-medium w-8 text-center">{totalPages}</span>
+                </div>
+                <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => {
+                        if (currentPage < totalPages - 1) setCurrentPage(currentPage + 1);
+                    }}
+                    disabled={currentPage === totalPages - 1 || totalPages <= 1}
+                >
+                    <IoIosArrowForward className="h-4 w-4" />
+                </Button>
             </div>
+            {previewImage && (
+                <ImagePreview
+                    imageUrl={previewImage}
+                    onClose={() => setPreviewImage(null)}
+                />
+            )}
         </div>
     );
-};
-
-export default Images;
+}
