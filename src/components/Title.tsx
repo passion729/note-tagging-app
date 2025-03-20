@@ -8,8 +8,8 @@ const Title = ({ title, tags }: Props) => {
         <div className="flex flex-col space-y-2">
             <p className="text-3xl font-bold">{ title }</p>
             <div className="flex flex-row flex-wrap gap-2">
-                { tags.map((tag) => (
-                    <p key={tag} className="text-gray-500">
+                { tags.map((tag, id) => (
+                    <p key={id} className="text-gray-500">
                         { "#" + tag }
                     </p>
                 )) }

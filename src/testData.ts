@@ -30,37 +30,16 @@ export const testImages = [
     }
 ];
 
-export const testComments = [
-    {
-        id: 1, content: "人家尼科尔基德曼雪白了一辈子。"
-    },
-    {
-        id: 2, content: "中国人的祖先认为最美的女性皮肤是：洁白无瑕、肤如凝脂、白里透红，唇红齿白等，有上千年的历史了。"
-    },
-    {
-        id: 3, content: "我觉得欧美人追求小麦色肤色，一开始是他们工人运动先闹了一遍，现在主要是掩盖雀斑和因为卖血导致的糟糕脸色。本原生白皮党觉得白人晒稍微有一点红或者有点黄好看，晒小麦色反而不太好看。"
-    },
-    {
-        id: 4, content: "因为自己没有的就是最香的。"
-    },
-    {
-        id: 5, content: "我也觉得小麦色很有性张力"
-    },
-    {
-        id: 6, content: "气候环境原因，欧洲的纬度比较高而且阴天和雾天比较多，日照相比中国要小很多，所以肤色普遍较白，要花钱出去旅游度假才有晒黑的机会。这点和中国的成都类似。而中国大多数地区反着来，在室外工作的容易晒黑，条件比较好的才会白，也就是所谓富贵人家。这就是为什么欧洲以黑为美，亚洲以白为美的原因"
-    },
-    {
-        id: 7, content: "本质都是哪种肤色能体现富有就追哪种。东南亚也追白，欧美追黑是因为有钱人才有大把时间度假晒太阳"
-    },
-    {
-        id: 8, content: "因为中国人的白是白里透红，而西方人的白是死猪肉的白，能不恶心人吗？"
-    },
-    {
-        id: 9, content: "我觉得欧美人追求小麦色肤色，一开始是他们工人运动先闹了一遍，现在主要是掩盖雀斑和因为卖血导致的糟糕脸色。本原生白皮党觉得白人晒稍微有一点红或者有点黄好看，晒小麦色反而不太好看。"
-    },
-    {
-        id: 10, content: "我觉得欧美人追求小麦色肤色，一开始是他们工人运动先闹了一遍，现在主要是掩盖雀斑和因为卖血导致的糟糕脸色。本原生白皮党觉得白人晒稍微有一点红或者有点黄好看，晒小麦色反而不太好看。"
-    }
+export const testComments = ["翻译的那些软件我怎么找不到[失望R]",
+    "中国人的祖先认为最美的女性皮肤是：洁白无瑕、肤如凝脂、白里透红，唇红齿白等，有上千年的历史了。",
+    "我觉得欧美人追求小麦色肤色，一开始是他们工人运动先闹了一遍，现在主要是掩盖雀斑和因为卖血导致的糟糕脸色。本原生白皮党觉得白人晒稍微有一点红或者有点黄好看，晒小麦色反而不太好看。",
+    "因为自己没有的就是最香的。",
+    "我也觉得小麦色很有性张力",
+    "气候环境原因，欧洲的纬度比较高而且阴天和雾天比较多，日照相比中国要小很多，所以肤色普遍较白，要花钱出去旅游度假才有晒黑的机会。这点和中国的成都类似。而中国大多数地区反着来，在室外工作的容易晒黑，条件比较好的才会白，也就是所谓富贵人家。这就是为什么欧洲以黑为美，亚洲以白为美的原因",
+    "本质都是哪种肤色能体现富有就追哪种。东南亚也追白，欧美追黑是因为有钱人才有大把时间度假晒太阳",
+    "因为中国人的白是白里透红，而西方人的白是死猪肉的白，能不恶心人吗？",
+    "我觉得欧美人追求小麦色肤色，一开始是他们工人运动先闹了一遍，现在主要是掩盖雀斑和因为卖血导致的糟糕脸色。本原生白皮党觉得白人晒稍微有一点红或者有点黄好看，晒小麦色反而不太好看。",
+    "我觉得欧美人追求小麦色肤色，一开始是他们工人运动先闹了一遍，现在主要是掩盖雀斑和因为卖血导致的糟糕脸色。本原生白皮党觉得白人晒稍微有一点红或者有点黄好看，晒小麦色反而不太好看。"
 ]
 
 export const testNote = {
@@ -74,31 +53,31 @@ export const testNote = {
     "user_id": "5a05410311be105800850be0",
     "nickname": "nightlight",
     "avatar": "https://sns-avatar-qc.xhscdn.com/avatar/5a054105b46c5d3a124021a2.jpg",
-    "liked_count": "4217",
+    "liked_count": "4220",
     "collected_count": "3484",
     "comment_count": "499",
     "share_count": "1136",
     "ip_location": "",
-    "image_list": "http://sns-webpic-qc.xhscdn.com/202503191436/7ab63f3c99ca43690ac323e736da6aa7/1040g2sg30u9b9is0li0049vbvj0g62v0ke3q2t8!nd_dft_wlteh_jpg_3,http://sns-webpic-qc.xhscdn.com/202503191436/e3e17ceae98470a588440d699cc881e1/1040g2sg30u9b9is0li0g49vbvj0g62v0vjhhqro!nd_dft_wgth_jpg_3,http://sns-webpic-qc.xhscdn.com/202503191436/ffdee9ac26eaf117c05bfa96e8abedbc/1040g2sg30u9b9is0li1049vbvj0g62v0lado560!nd_dft_wlteh_jpg_3",
+    "image_list": "http://sns-webpic-qc.xhscdn.com/202503201804/21b147ff209ba24ec1192dd1b4b2b2de/1040g2sg30u9b9is0li0049vbvj0g62v0ke3q2t8!nd_dft_wlteh_jpg_3,http://sns-webpic-qc.xhscdn.com/202503201804/74cd351c87c3d1ae0a51636792612aaa/1040g2sg30u9b9is0li0g49vbvj0g62v0vjhhqro!nd_dft_wgth_jpg_3,http://sns-webpic-qc.xhscdn.com/202503201804/1f66f6b30b486ff3f0068e2e1a13e90a/1040g2sg30u9b9is0li1049vbvj0g62v0lado560!nd_dft_wlteh_jpg_3",
     "tag_list": "转码",
-    "last_modify_ts": 1742366197284,
-    "note_url": "https://www.xiaohongshu.com/explore/65afc71b000000000c0072a0?xsec_token=ABx6v0jYBaSXAk-X-i1hH5CM7nusp_zk0eZ7RrSC8kqno=&xsec_source=pc_search",
+    "last_modify_ts": 1742465079746,
+    "note_url": "https://www.xiaohongshu.com/explore/65afc71b000000000c0072a0?xsec_token=ABx6v0jYBaSXAk-X-i1hH5CFU95lGtethlKaFTDYhj8go=&xsec_source=pc_search",
     "source_keyword": "编程副业",
-    "xsec_token": "ABx6v0jYBaSXAk-X-i1hH5CM7nusp_zk0eZ7RrSC8kqno="
+    "xsec_token": "ABx6v0jYBaSXAk-X-i1hH5CFU95lGtethlKaFTDYhj8go="
 }
 
 export const testComment = {
-    "comment_id": "65afeffa0000000002020c53",
-    "create_time": 1706029050000,
+    "comment_id": "5fe7334b0000000001025ba2",
+    "create_time": 1608987467000,
     "ip_location": null,
-    "note_id": "65afc71b000000000c0072a0",
-    "content": "不卖课也不做付费服务[种草R]，如果要问我怎么自学编程，我的答案是自行搜索，因为程序员最重要的一个本领就是：会搜索[飞吻R]",
-    "user_id": "5a05410311be105800850be0",
-    "nickname": "nightlight",
-    "avatar": "https://sns-avatar-qc.xhscdn.com/avatar/5a054105b46c5d3a124021a2.jpg?imageView2/2/w/120/format/jpg",
-    "sub_comment_count": "21",
+    "note_id": "5fe540bc0000000001008808",
+    "content": "翻译的那些软件我怎么找不到[失望R]",
+    "user_id": "5e0fd2a80000000001008669",
+    "nickname": "白果儿",
+    "avatar": "https://sns-avatar-qc.xhscdn.com/avatar/5e0fd2a80000000001008669.jpg?imageView2/2/w/120/format/jpg",
+    "sub_comment_count": "5",
     "pictures": "",
     "parent_comment_id": 0,
-    "last_modify_ts": 1742366197530,
-    "like_count": "758"
+    "last_modify_ts": 1742465080099,
+    "like_count": "27"
 }
