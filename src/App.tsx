@@ -10,7 +10,7 @@ import NoteSwitcher from "./components/NoteSwitcher.tsx";
 
 function App() {
     return (
-        <div className="m-8 flex flex-col justify-center max-w-9/10">
+        <div className="m-8 flex flex-col justify-center max-w-9/10 max-h-full">
             <div className="flex justify-between items-center">
                 <Title title={ testTitle.title } tags={ testTitle.tags } />
                 <ThemeSwitcher />
@@ -18,25 +18,34 @@ function App() {
 
             <div className="divider my-[4px]" />
 
-            <div className="flex flex-row">
-                <div className="space-y-5 place-items-center basis-1/2">
-                    <Images images={ testImages.slice(0, 3)} />
-                    <NoteContent content={ testContent } />
+            <div className="flex flex-row w-full mt-2 max-h-9/10">
+                <div className="flex flex-col justify-between items-center w-1/2">
+                    <div className="flex flex-col items-center space-y-5 max-h-9/10">
+                        <Images images={ testImages.slice(0, 3) } />
+                        <div className="overflow-y-scroll">
+                            <NoteContent content={ testContent } />
+                        </div>
+
+                    </div>
                     <div className="w-3/5 h-10">
                         <TagButton radio_name="note_tag" />
                     </div>
                 </div>
 
-                <div className="divider divider-horizontal" />
+                <div className="divider divider-horizontal mx-5" />
 
-                <div className="basis-1/2">
-                    <CommentList comments={ testComment } />
+                <div className="flex flex-col justify-between items-center w-1/2">
+                    <div className="h-9/10 overflow-y-scroll">
+                        <CommentList comments={ testComment } />
+                    </div>
+                    <div className="flex w-full justify-end">
+                        <NoteSwitcher />
+                    </div>
                 </div>
+
             </div>
 
-            <div className="flex justify-end mt-3">
-                <NoteSwitcher />
-            </div>
+
 
 
         </div>

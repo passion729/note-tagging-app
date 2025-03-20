@@ -6,18 +6,17 @@ interface Props {
 
 const CommentList = ({ comments }: Props) => {
     return (
-        <div className="h overflow-auto">
+        <div className="h-full w-full">
             <ul className="overscroll-contain">
                 { comments.map((comment) => (
                     <li key={ comment.id }>
-                        <div className="flex flex-row justify-between items-center space-x-4">
+                        <div className="flex flex-row justify-between items-center space-x-4 pr-1">
                             <div className="w-full leading-7 px-1">
                                 { comment.content }
                             </div>
-
-                            <TagButton radio_name={"comment_tag"+comment.id} />
+                            <TagButton radio_name={ "comment_tag" + comment.id } />
                         </div>
-                        <div className="divider my-[1px]" />
+                        { comment.id !== comments.length && <div className="divider my-[1px]" /> }
                     </li>
                 )) }
             </ul>
