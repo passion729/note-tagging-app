@@ -8,6 +8,7 @@ interface NoteSwitcherProps {
     submitHandler: () => void;
     currentId: number;
     totalNum: number;
+    submitDisabled?: boolean;
 }
 
 export function NoteSwitcher({
@@ -16,6 +17,7 @@ export function NoteSwitcher({
     submitHandler,
     currentId,
     totalNum,
+    submitDisabled = false,
 }: NoteSwitcherProps) {
     return (
         <div className="flex items-center">
@@ -43,6 +45,7 @@ export function NoteSwitcher({
             <Button
                 variant="default"
                 onClick={submitHandler}
+                disabled={submitDisabled}
                 className="ml-4 bg-primary hover:bg-primary/90 text-white dark:text-white flex items-center gap-2"
             >
                 <span>提交</span>

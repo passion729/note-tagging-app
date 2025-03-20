@@ -19,12 +19,14 @@ interface FormData {
 }
 
 export interface CommentListRef {
-    submit: () => void;
     reset: () => void;
+    getCurrentOpinions: () => string[];
+    submit: () => void;
+    setOpinions: (opinions: string[]) => void;
 }
 
-const CommentList = forwardRef<CommentListRef, Props>(({ comments, onSubmit, savedOpinions }, ref) => {
-    const [opinions, setOpinions] = useState<string[]>(new Array(comments.length).fill(""));
+const CommentList = forwardRef<CommentListRef, Props>(({ comments, onSubmit, savedOpinions = [] }, ref) => {
+    const [opinions, setOpinions] = useState<string[]>(savedOpinions);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { handleSubmit } = useForm<FormData>();
 
@@ -39,6 +41,7 @@ const CommentList = forwardRef<CommentListRef, Props>(({ comments, onSubmit, sav
         const newOpinions = [...opinions];
         newOpinions[index] = value;
         setOpinions(newOpinions);
+        onSubmit?.(newOpinions);
     };
 
     const onFormSubmit = () => {
@@ -47,6 +50,7 @@ const CommentList = forwardRef<CommentListRef, Props>(({ comments, onSubmit, sav
             return;
         }
         
+        console.log("CommentList - 提交所有评论标签:", opinions);
         setIsSubmitting(true);
         if (onSubmit) {
             onSubmit(opinions);
@@ -58,13 +62,28 @@ const CommentList = forwardRef<CommentListRef, Props>(({ comments, onSubmit, sav
     };
 
     const reset = () => {
+        console.log("CommentList - 重置所有评论标签");
         setOpinions(new Array(comments.length).fill(""));
         setIsSubmitting(false);
     };
 
+    const getCurrentOpinions = () => {
+        return opinions;
+    };
+
     useImperativeHandle(ref, () => ({
-        submit: onFormSubmit,
-        reset
+        reset: () => {
+            setOpinions([]);
+        },
+        getCurrentOpinions: () => {
+            return opinions;
+        },
+        submit: () => {
+            onSubmit?.(opinions);
+        },
+        setOpinions: (newOpinions: string[]) => {
+            setOpinions(newOpinions);
+        }
     }));
 
     return (

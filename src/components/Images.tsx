@@ -20,8 +20,8 @@ export default function Images({ images }: ImagesProps) {
     const currentImages = images.slice(startIndex, endIndex);
 
     return (
-        <div className="flex flex-col h-full">
-            <div className="flex-1 grid grid-cols-3 gap-4">
+        <div className="h-full flex flex-col gap-2">
+            <div className="flex-grow grid grid-cols-3 gap-4">
                 {currentImages.map((image, id) => (
                     <div
                         key={id}
@@ -36,7 +36,7 @@ export default function Images({ images }: ImagesProps) {
                     </div>
                 ))}
             </div>
-            <div className="flex items-center justify-center mt-4">
+            <div className="h-14 flex items-center justify-center mt-2 bg-base-100 z-10">
                 <Button
                     variant="outline"
                     size="icon"
