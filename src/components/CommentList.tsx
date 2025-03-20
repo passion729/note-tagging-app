@@ -7,7 +7,7 @@ interface Props {
 const CommentList = ({ comments }: Props) => {
     return (
         <div className="h-full w-full">
-            <ul className="overscroll-contain">
+            <ul>
                 { comments.map((comment) => (
                     <li key={ comment.id }>
                         <div className="flex flex-row justify-between items-center space-x-4 pr-1">

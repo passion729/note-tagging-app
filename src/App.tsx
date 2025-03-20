@@ -1,5 +1,5 @@
 import './App.css';
-import { testComment, testContent, testImages, testTitle } from "./testData.ts";
+import { testComments, testContent, testImages, testTitle } from "./testData.ts";
 import NoteContent from "./components/NoteContent.tsx";
 import Images from "./components/Images.tsx";
 import TagButton from "./components/TagButton.tsx";
@@ -35,8 +35,8 @@ function App() {
                 <div className="divider divider-horizontal mx-5" />
 
                 <div className="flex flex-col justify-between items-center w-1/2">
-                    <div className="h-9/10 overflow-y-scroll">
-                        <CommentList comments={ testComment } />
+                    <div className="h-9/10 overflow-y-scroll overscroll-y-auto">
+                        <CommentList comments={ testComments } />
                     </div>
                     <div className="flex w-full justify-end">
                         <NoteSwitcher />

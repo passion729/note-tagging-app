@@ -30,7 +30,7 @@ export const testImages = [
     }
 ];
 
-export const testComment = [
+export const testComments = [
     {
         id: 1, content: "人家尼科尔基德曼雪白了一辈子。"
     },
@@ -62,3 +62,43 @@ export const testComment = [
         id: 10, content: "我觉得欧美人追求小麦色肤色，一开始是他们工人运动先闹了一遍，现在主要是掩盖雀斑和因为卖血导致的糟糕脸色。本原生白皮党觉得白人晒稍微有一点红或者有点黄好看，晒小麦色反而不太好看。"
     }
 ]
+
+export const testNote = {
+    "note_id": "65afc71b000000000c0072a0",
+    "type": "normal",
+    "title": "一小时赚1600，转码依然是出路",
+    "desc": "在互联网行业面临各种质疑的今天，许多人对转型编程持怀疑态度，甚至有人将其戏称为“49年转国军”🤔。尽管如此，依然有很多小伙伴怀着期待在观望👀。那作为一名拥有多年编程开发经验以及副业经历的程序员，我想结合最近的一些感悟，和大家聊一下，另类的转码理由。\n\t\n前几天，在某鱼平台上我接了两个小项目：一个是APP开发修改（图2），收入1000元💰；另一个是技术咨询（图3），收入600元💰。两个项目都是简单的小项目，加起来不到一小时就完成了，但在转码这个话题下，却让我感触挺深的。\n\t\n[一R]作为副业老油条的我，某鱼早已不是我的主要副业渠道，几乎不再投入时间和精力，但每天仍有大量客户主动联系我。没有积极的宣传和营销，客户依旧络绎不绝。这恰恰说明了整个行业的需求仍然旺盛，即使经济总体走低，互联网行业的衰退速度也相对较慢，依然是良好的职业选择。\n\t\n[二R]这两个项目，客户分别来自北京和美国，而作为乙方的我是在杭州进行远程开发和沟通的。这种不拘泥于任何地点任何形式，可以随时随地进行副业工作，客户也不仅仅限于本地，可能囊括国内，甚至海外，凸显了互联网行业的独特优势：远程工作模式。\n\t\n[三R]在某鱼上发布的副业信息，无任何成本，只需要发布自己擅长的技能就好。副业的成本极低，几乎不需要任何投资，这在其他行业中是无法想象的。\n\t\n所以，如果从副业的角度来看，程序员无疑是其中的佼佼者，这也是我为大家提供的一个另类转码理由：从副业开始，兼职转码。大家犹豫不决的原因有很多，但我想大部分人都是因为担心失去现有工作的同时，又无法适应新职业。所以我们不妨兼职转码，先从副业开始，积累经验，等待合适的时机，再考虑全职转码。另外编程本身就是可以在互联网上学习的技术，只要我们在自己工作之余，下班以后去坚持学习，自学成才绝非难事📚。\n\t\n这两年确实很难，但互联网行业依然是最具吸引力的前三大行业之一，无论是薪资待遇还是岗位需求。对于那些想要拓宽视野的人来说，转型编程是一条理想的道路。对于那些不喜欢复杂人际关系的人来说，程序员的生活相对简单，通常是“三点一线”的生活方式🏠。\n\t\n另外，唱衰互联网的声音，主要来自两种人：一是行业内的人，担心新人的加入导致竞争加剧；二是渴望加入却无法找到途径的人。你属于哪一种呢？或者两者都不是？\n所以，热爱就去追求吧！不要留有遗憾。人生短暂，为何不选择做一些酷炫的事情，比如编码#转码[话题]#",
+    "video_url": "",
+    "time": 1706018587000,
+    "last_update_time": 1706018588000,
+    "user_id": "5a05410311be105800850be0",
+    "nickname": "nightlight",
+    "avatar": "https://sns-avatar-qc.xhscdn.com/avatar/5a054105b46c5d3a124021a2.jpg",
+    "liked_count": "4217",
+    "collected_count": "3484",
+    "comment_count": "499",
+    "share_count": "1136",
+    "ip_location": "",
+    "image_list": "http://sns-webpic-qc.xhscdn.com/202503191436/7ab63f3c99ca43690ac323e736da6aa7/1040g2sg30u9b9is0li0049vbvj0g62v0ke3q2t8!nd_dft_wlteh_jpg_3,http://sns-webpic-qc.xhscdn.com/202503191436/e3e17ceae98470a588440d699cc881e1/1040g2sg30u9b9is0li0g49vbvj0g62v0vjhhqro!nd_dft_wgth_jpg_3,http://sns-webpic-qc.xhscdn.com/202503191436/ffdee9ac26eaf117c05bfa96e8abedbc/1040g2sg30u9b9is0li1049vbvj0g62v0lado560!nd_dft_wlteh_jpg_3",
+    "tag_list": "转码",
+    "last_modify_ts": 1742366197284,
+    "note_url": "https://www.xiaohongshu.com/explore/65afc71b000000000c0072a0?xsec_token=ABx6v0jYBaSXAk-X-i1hH5CM7nusp_zk0eZ7RrSC8kqno=&xsec_source=pc_search",
+    "source_keyword": "编程副业",
+    "xsec_token": "ABx6v0jYBaSXAk-X-i1hH5CM7nusp_zk0eZ7RrSC8kqno="
+}
+
+export const testComment = {
+    "comment_id": "65afeffa0000000002020c53",
+    "create_time": 1706029050000,
+    "ip_location": null,
+    "note_id": "65afc71b000000000c0072a0",
+    "content": "不卖课也不做付费服务[种草R]，如果要问我怎么自学编程，我的答案是自行搜索，因为程序员最重要的一个本领就是：会搜索[飞吻R]",
+    "user_id": "5a05410311be105800850be0",
+    "nickname": "nightlight",
+    "avatar": "https://sns-avatar-qc.xhscdn.com/avatar/5a054105b46c5d3a124021a2.jpg?imageView2/2/w/120/format/jpg",
+    "sub_comment_count": "21",
+    "pictures": "",
+    "parent_comment_id": 0,
+    "last_modify_ts": 1742366197530,
+    "like_count": "758"
+}
