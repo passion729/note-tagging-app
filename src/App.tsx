@@ -421,7 +421,7 @@ function App() {
                                 <NoteContent content={testNotes[noteId].content} />
                             </div>
                             <div className="h-16 mt-4 flex items-center justify-center shrink-0">
-                                <div className="w-3/5">
+                                <div className="w-3/5 h-11">
                                     <TagButton 
                                         value={noteOpinion}
                                         onChange={setNoteOpinion}

@@ -1,18 +1,3 @@
-export interface Note {
-    id: string;
-    title: string;
-    desc: string;
-    tags: string[];
-    images: string[];
-    comments: Comment[];
-    opinion: string;
-}
-
-export interface Comment {
-    comment: string;
-    opinion: string;
-}
-
 export const testNotes = [
     {
         id: 1,

@@ -1,22 +1,35 @@
 import { useEffect, useState } from 'react';
 
 export default function ThemeSwitcher() {
-    const [theme, setTheme] = useState<'light' | 'dark'>('light');
-
-    useEffect(() => {
-        // 从localStorage获取保存的主题
+    const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+        // 从localStorage获取主题
         const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
         if (savedTheme) {
-            setTheme(savedTheme);
-            document.documentElement.setAttribute('data-theme', savedTheme);
+            return savedTheme;
         }
+        // 如果没有保存的主题，则使用系统主题
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    });
+
+    useEffect(() => {
+        // 监听系统主题变化
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const handleChange = (e: MediaQueryListEvent) => {
+            setTheme(e.matches ? 'dark' : 'light');
+        };
+
+        mediaQuery.addEventListener('change', handleChange);
+        return () => mediaQuery.removeEventListener('change', handleChange);
     }, []);
 
+    useEffect(() => {
+        // 当主题改变时，更新localStorage和document的data-theme属性
+        localStorage.setItem('theme', theme);
+        document.documentElement.setAttribute('data-theme', theme);
+    }, [theme]);
+
     const toggleTheme = () => {
-        const newTheme = theme === 'light' ? 'dark' : 'light';
-        setTheme(newTheme);
-        localStorage.setItem('theme', newTheme);
-        document.documentElement.setAttribute('data-theme', newTheme);
+        setTheme(prev => prev === 'light' ? 'dark' : 'light');
     };
 
     return (

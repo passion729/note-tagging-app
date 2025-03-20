@@ -13,8 +13,8 @@ const TagButton = ({ value, onChange }: Props) => {
                        checked={value === "disagree"}
                        onChange={(event) => onChange(event.target.value)} />
                 <div className="p-2 rounded-lg flex-auto h-full
-                content-center justify-items-center bg-gray-500 peer-checked:bg-red-400">
-                    <FaRegThumbsDown />
+                content-center justify-items-center btn bg-gray-500 peer-checked:bg-red-400">
+                    <FaRegThumbsDown className="accent-black" />
                 </div>
             </label>
 
@@ -23,7 +23,7 @@ const TagButton = ({ value, onChange }: Props) => {
                        checked={value === "neutral"}
                        onChange={(event) => onChange(event.target.value)} />
                 <div className="p-2 rounded-lg flex-auto h-full
-                content-center justify-items-center bg-gray-500 peer-checked:bg-blue-400">
+                content-center justify-items-center btn bg-gray-500 peer-checked:bg-blue-400">
                     <FaRegQuestionCircle />
                 </div>
             </label>
@@ -33,7 +33,7 @@ const TagButton = ({ value, onChange }: Props) => {
                        checked={value === "agree"}
                        onChange={(event) => onChange(event.target.value)} />
                 <div className="p-2 rounded-lg flex-auto h-full
-                    content-center justify-items-center bg-gray-500 peer-checked:bg-green-400">
+                    content-center justify-items-center btn bg-gray-500 peer-checked:bg-green-400">
                     <FaRegThumbsUp />
                 </div>
             </label>
