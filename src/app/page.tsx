@@ -13,6 +13,7 @@ import { TagData, Note } from "@/types";
 import { saveTagData, isAllNotesTagged, clearTagData } from "@/utils/storage";
 import ImagePreview from "@/components/ImagePreview";
 import { Toast } from '@/components/Toast';
+import LoadingOverlay from "@/components/LoadingOverlay";
 
 // 图片预加载函数
 const preloadImage = (url: string) => {
@@ -581,11 +582,7 @@ function App() {
                                 <CommentList
                                     ref={commentListRef}
                                     comments={notes[noteId].comments}
-                                    onSubmit={(opinions) => {
-                                        setIsSubmitting(true);
-                                        handleCommentSubmit(opinions);
-                                        setTimeout(() => setIsSubmitting(false), 500);
-                                    }}
+                                    onSubmit={handleCommentSubmit}
                                     savedOpinions={getCurrentNoteSavedOpinions()}
                                     showWarning={showWarning}
                                 />
@@ -634,6 +631,9 @@ function App() {
                         type={toast.type}
                         onClose={() => setToast(null)}
                     />
+                )}
+                {isSubmitting && (
+                    <LoadingOverlay message="正在提交数据，请稍候..." />
                 )}
             </div>
         </div>
