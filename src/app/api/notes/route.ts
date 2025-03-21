@@ -3,8 +3,6 @@ import { supabase } from '@/lib/supabase';
 
 export async function GET() {
     try {
-        console.log('开始获取笔记列表...');
-        
         // 获取笔记列表
         const { data: notes, error: notesError } = await supabase
             .from('notes')
@@ -23,7 +21,6 @@ export async function GET() {
             .order('created_at', { ascending: false });
 
         if (notesError) {
-            console.error('获取笔记列表失败:', notesError);
             return NextResponse.json(
                 {
                     success: false,
@@ -35,7 +32,6 @@ export async function GET() {
         }
 
         if (!notes) {
-            console.error('笔记数据为空');
             return NextResponse.json(
                 {
                     success: false,
@@ -52,7 +48,6 @@ export async function GET() {
             .select('*');
 
         if (opinionsError) {
-            console.error('获取opinions失败:', opinionsError);
             return NextResponse.json(
                 {
                     success: false,
@@ -94,7 +89,6 @@ export async function GET() {
             data: formattedNotes
         });
     } catch (error) {
-        console.error('获取笔记列表失败:', error);
         return NextResponse.json(
             {
                 success: false,

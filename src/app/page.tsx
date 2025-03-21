@@ -52,7 +52,6 @@ function App() {
             setIsLoading(true);
             setError(null);
             
-            console.log('开始获取笔记列表...');
             const response = await fetch('/api/notes');
             
             if (!response.ok) {
@@ -65,16 +64,13 @@ function App() {
             }
             
             const result = await response.json();
-            console.log('获取到的笔记数据:', result);
 
             if (result.success) {
                 setNotes(result.data);
-                console.log('成功设置笔记数据');
             } else {
                 throw new Error(result.message || '获取笔记列表失败');
             }
         } catch (error) {
-            console.error('获取笔记列表失败:', error);
             setError(error instanceof Error ? error.message : '获取笔记列表失败，请刷新页面重试');
         } finally {
             setIsLoading(false);
