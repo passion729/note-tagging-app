@@ -22,7 +22,8 @@ export const testNotes = [
                 content: "这是另一条很长的评论，用来测试多条评论之间的间距和布局。这里可以写一些技术性的反馈，比如性能问题、bug报告或者功能建议。评论内容可以包含代码示例或者配置说明。",
                 opinion: "negative"
             }
-        ]
+        ],
+        opinion: "negative"
     },
     {
         id: 2,
@@ -40,7 +41,8 @@ export const testNotes = [
                 content: "这是一条包含特殊字符的评论：\n1. 特殊字符：!@#$%^&*()_+\n2. 中文标点：，。！？；：\"\"''（）【】《》\n3. 表情符号：😊 😎 🤔 💡",
                 opinion: "neutral"
             }
-        ]
+        ],
+        opinion: "agree"
     },
     {
         id: 3,
@@ -57,7 +59,8 @@ export const testNotes = [
                 content: "这是一条包含代码示例的评论：\n```javascript\nconst example = {\n    name: 'test',\n    description: '这是一个很长的描述文本',\n    features: ['feature1', 'feature2', 'feature3']\n};\n```",
                 opinion: "positive"
             }
-        ]
+        ],
+        opinion: "negative"
     },
     {
         id: 4,
@@ -78,7 +81,7 @@ export const testNotes = [
                 content: "这是一条包含表格数据的评论：\n\n| 优点 | 缺点 | 建议 |\n|------|------|------|\n| 功能完善 | 性能待优化 | 添加缓存 |\n| 界面美观 | 操作复杂 | 简化流程 |\n| 稳定性好 | 加载慢 | 优化加载 |",
                 opinion: "neutral"
             }
-        ]
+        ], opinion: "negative"
     },
     {
         id: 5,
@@ -97,6 +100,6 @@ export const testNotes = [
                 content: "这是一条包含引用文本的评论：\n\n> 这是一段引用文本，用来测试评论中引用块的样式。这里可以写一些重要的反馈或者建议。引用文本可以包含多个段落，用来测试文本的换行和缩进效果。",
                 opinion: "positive"
             }
-        ]
+        ], opinion: "negative"
     }
 ];

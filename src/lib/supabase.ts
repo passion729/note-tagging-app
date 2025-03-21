@@ -15,19 +15,24 @@ export type Database = {
           title: string;
           content: string;
           tags: string[];
+          image_list: string[];
           created_at: string;
-          updated_at: string;
         };
         Insert: {
+          id?: number;
           title: string;
           content: string;
-          tags: string[];
+          tags?: string[];
+          image_list?: string[];
+          created_at?: string;
         };
         Update: {
+          id?: number;
           title?: string;
           content?: string;
           tags?: string[];
-          updated_at?: string;
+          image_list?: string[];
+          created_at?: string;
         };
       };
       comments: {
@@ -38,53 +43,51 @@ export type Database = {
           created_at: string;
         };
         Insert: {
+          id?: number;
           note_id: number;
           content: string;
+          created_at?: string;
         };
         Update: {
+          id?: number;
           note_id?: number;
           content?: string;
           created_at?: string;
-        };
-      };
-      images: {
-        Row: {
-          id: number;
-          note_id: number;
-          url: string;
-          created_at: string;
-        };
-        Insert: {
-          note_id: number;
-          url: string;
-        };
-        Update: {
-          note_id?: number;
-          url?: string;
-          created_at?: string;
-        };
-      };
-      tag_data: {
-        Row: {
-          id: number;
-          note_id: number;
-          note_opinion: 'agree' | 'disagree' | 'neutral';
-          comment_opinions: ('agree' | 'disagree' | 'neutral')[];
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: {
-          note_id: number;
-          note_opinion: 'agree' | 'disagree' | 'neutral';
-          comment_opinions: ('agree' | 'disagree' | 'neutral')[];
-        };
-        Update: {
-          note_id?: number;
-          note_opinion?: 'agree' | 'disagree' | 'neutral';
-          comment_opinions?: ('agree' | 'disagree' | 'neutral')[];
           updated_at?: string;
         };
       };
+      opinions: {
+        Row: {
+          id: number;
+          note_id: number;
+          comment_id: number | null;
+          opinion: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: number;
+          note_id: number;
+          comment_id?: number | null;
+          opinion: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          note_id?: number;
+          comment_id?: number | null;
+          opinion?: string;
+          created_at?: string;
+        };
+      };
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      [_ in never]: never;
+    };
+    Enums: {
+      [_ in never]: never;
     };
   };
 }; 
