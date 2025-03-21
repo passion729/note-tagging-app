@@ -18,7 +18,7 @@ export function Toast({ message, type = 'success', onClose, duration = 3000 }: T
     }, [duration, onClose]);
 
     return (
-        <div className="fixed bottom-4 right-4 z-50 animate-slide-up">
+        <div className="absolute top-4 right-4 z-50 animate-slide-up">
             <div
                 className={cn(
                     "px-4 py-2 rounded-lg shadow-lg text-white",

@@ -518,7 +518,7 @@ function App() {
 
     return (
         <div className="min-h-screen w-screen flex items-center justify-center p-8">
-            <div className="w-full max-w-[1400px] min-w-[1200px] h-[900px] max-h-[90vh] min-h-[900px] flex flex-col bg-base-100 rounded-lg shadow-lg">
+            <div className="w-full max-w-[1400px] min-w-[1200px] h-[900px] max-h-[90vh] min-h-[900px] flex flex-col bg-base-100 rounded-lg shadow-lg relative">
                 <div className="flex justify-between items-center mb-2 px-8 pt-8">
                     <Title title={notes[noteId].title} tags={notes[noteId].tags} />
                     <div className="ml-32">
@@ -596,20 +596,21 @@ function App() {
                         </div>
                     </div>
                 </div>
+
+                {previewImage && (
+                    <ImagePreview
+                        imageUrl={previewImage}
+                        onClose={() => setPreviewImage(null)}
+                    />
+                )}
+                {toast && (
+                    <Toast
+                        message={toast.message}
+                        type={toast.type}
+                        onClose={() => setToast(null)}
+                    />
+                )}
             </div>
-            {previewImage && (
-                <ImagePreview
-                    imageUrl={previewImage}
-                    onClose={() => setPreviewImage(null)}
-                />
-            )}
-            {toast && (
-                <Toast
-                    message={toast.message}
-                    type={toast.type}
-                    onClose={() => setToast(null)}
-                />
-            )}
         </div>
     );
 }
