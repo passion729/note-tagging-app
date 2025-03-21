@@ -44,21 +44,43 @@ export async function GET() {
             try {
                 console.log(`处理笔记 ${note.id}...`);
 
-                // 1. 插入笔记
+                // 1. 插入笔记（使用 upsert）
                 const { error: noteError } = await supabase
                     .from('notes')
-                    .insert({
+                    .upsert({
                         id: note.id,
                         title: note.title,
                         content: note.content,
-                        image_list: note.image_list || []
+                        image_list: note.image_list || [],
+                        tags: note.tags || []
+                    }, {
+                        onConflict: 'id'
                     });
 
                 if (noteError) {
                     throw new Error(`插入笔记失败: ${noteError.message}`);
                 }
 
-                // 2. 插入该笔记的所有评论
+                // 2. 删除该笔记的所有现有评论和意见
+                const { error: deleteError } = await supabase
+                    .from('opinions')
+                    .delete()
+                    .eq('note_id', note.id);
+
+                if (deleteError) {
+                    console.error(`删除笔记 ${note.id} 的意见失败:`, deleteError);
+                }
+
+                const { error: deleteCommentsError } = await supabase
+                    .from('comments')
+                    .delete()
+                    .eq('note_id', note.id);
+
+                if (deleteCommentsError) {
+                    console.error(`删除笔记 ${note.id} 的评论失败:`, deleteCommentsError);
+                }
+
+                // 3. 插入该笔记的所有评论
                 const commentsToInsert = note.comments.map(comment => ({
                     id: globalCommentId++,
                     note_id: note.id,
@@ -75,7 +97,7 @@ export async function GET() {
                     }
                 }
 
-                // 3. 插入笔记和评论的 opinions
+                // 4. 插入笔记和评论的 opinions
                 const opinionsToInsert = [];
 
                 // 添加笔记的 opinion（comment_id 为 null）
@@ -88,57 +110,36 @@ export async function GET() {
                 }
 
                 // 添加评论的 opinions
-                for (let i = 0; i < note.comments.length; i++) {
-                    const commentId = globalCommentId - note.comments.length + i;
-                    opinionsToInsert.push({
-                        note_id: note.id,
-                        comment_id: commentId,
-                        opinion: mapOpinion(note.comments[i].opinion || 'neutral')
-                    });
-                }
+                note.comments.forEach((comment, index) => {
+                    if (comment.opinion) {
+                        opinionsToInsert.push({
+                            note_id: note.id,
+                            comment_id: globalCommentId - note.comments.length + index,
+                            opinion: mapOpinion(comment.opinion)
+                        });
+                    }
+                });
 
-                // 批量插入所有 opinions
                 if (opinionsToInsert.length > 0) {
-                    console.log('开始批量插入opinions:', JSON.stringify(opinionsToInsert, null, 2));
                     const { error: opinionsError } = await supabase
                         .from('opinions')
                         .insert(opinionsToInsert);
 
                     if (opinionsError) {
-                        throw new Error(`插入opinions失败: ${opinionsError.message}`);
+                        throw new Error(`插入意见失败: ${opinionsError.message}`);
                     }
                 }
 
-                console.log(`笔记 ${note.id} 处理完成`);
-            } catch (noteError) {
-                console.error(`处理笔记 ${note.id} 时出错:`, noteError);
-                return NextResponse.json({
-                    success: false,
-                    message: noteError instanceof Error ? noteError.message : '处理笔记时出错'
-                });
+                console.log(`成功导入笔记 ID: ${note.id} 及其评论`);
+            } catch (error) {
+                console.error(`处理笔记 ${note.id} 时出错:`, error);
+                throw error;
             }
         }
 
-        // 验证数据
-        const { data: allOpinions, error: fetchError } = await supabase
-            .from('opinions')
-            .select('*');
-
-        if (fetchError) {
-            console.error('获取opinions失败:', fetchError);
-            return NextResponse.json({
-                success: false,
-                message: `获取opinions失败: ${fetchError.message}`
-            });
-        }
-
-        console.log('所有opinions:', JSON.stringify(allOpinions, null, 2));
-        console.log('所有数据导入完成');
-
         return NextResponse.json({
             success: true,
-            message: '测试数据导入成功',
-            data: { opinions: allOpinions }
+            message: '测试数据导入成功'
         });
 
     } catch (error) {
