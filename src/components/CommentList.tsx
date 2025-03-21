@@ -22,7 +22,7 @@ export interface CommentListRef {
     setOpinions: (opinions: string[]) => void;
 }
 
-const CommentList = forwardRef<CommentListRef, Props>(({ comments, onSubmit, savedOpinions = [], showWarning = false, noteOpinion = "" }, ref) => {
+const CommentList = forwardRef<CommentListRef, Props>(({ comments, onSubmit, savedOpinions = [] }, ref) => {
     const [opinions, setOpinions] = useState<string[]>(savedOpinions);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { handleSubmit } = useForm<FormData>();
