@@ -2,13 +2,18 @@ import { useEffect, useState } from 'react';
 
 export default function ThemeSwitcher() {
     const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-        // 从localStorage获取主题
-        const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
-        if (savedTheme) {
-            return savedTheme;
+        // 确保在客户端环境下
+        if (typeof window !== 'undefined') {
+            // 从localStorage获取主题
+            const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
+            if (savedTheme) {
+                return savedTheme;
+            }
+            // 如果没有保存的主题，则使用系统主题
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         }
-        // 如果没有保存的主题，则使用系统主题
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        // 默认使用亮色主题
+        return 'light';
     });
 
     useEffect(() => {
