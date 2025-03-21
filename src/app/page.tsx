@@ -12,6 +12,7 @@ import { useState, useRef, useEffect } from "react";
 import { TagData, Note } from "@/types";
 import { saveTagData, isAllNotesTagged, clearTagData } from "@/utils/storage";
 import ImagePreview from "@/components/ImagePreview";
+import { Toast } from '@/components/Toast';
 
 // 图片预加载函数
 const preloadImages = (imageUrls: string[]) => {
@@ -43,6 +44,7 @@ function App() {
     const [showWarning, setShowWarning] = useState(false);
     const [notes, setNotes] = useState<Note[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
     // 获取笔记列表
     const fetchNotes = async () => {
@@ -165,12 +167,15 @@ function App() {
 
     // 获取当前笔记的已保存评论标签
     const getCurrentNoteSavedOpinions = () => {
+        if (!notes || !notes[noteId]) return [];
         const currentNoteId = notes[noteId].id;
         return tagData[currentNoteId]?.commentOpinions || [];
     };
 
     // 检查当前笔记和评论是否都已添加标签（不修改状态）
     const checkCurrentNoteTagged = () => {
+        if (!notes || !notes[noteId]) return false;
+        
         // 检查笔记标签是否已添加
         if (!noteOpinion) {
             return false;
@@ -198,6 +203,11 @@ function App() {
 
     // 用于UI交互的检查函数，会设置错误消息
     const isCurrentNoteTagged = () => {
+        if (!notes || !notes[noteId]) {
+            setError("数据加载中，请稍候");
+            return false;
+        }
+
         // 检查笔记标签是否已添加
         if (!noteOpinion) {
             setError("请先标记当前笔记");
@@ -245,6 +255,8 @@ function App() {
 
     // 检查所有笔记和评论是否都已标记（不修改状态）
     const isAllTagged = () => {
+        if (!notes || !notes[noteId]) return false;
+
         // 获取当前笔记的评论标签
         const currentOpinions = commentListRef.current?.getCurrentOpinions() || [];
         const currentComments = notes[noteId].comments;
@@ -461,21 +473,33 @@ function App() {
                     setNoteOpinion("");
                     commentListRef.current?.reset();
                     // 显示成功消息
-                    alert('标签数据提交成功！');
+                    setToast({
+                        message: '标签数据提交成功！',
+                        type: 'success'
+                    });
                 } else {
                     // 处理验证错误
                     if (result.errors && Array.isArray(result.errors)) {
                         const errorMessages = result.errors.map((error: { field: string; message: string }) => 
                             `${error.field}: ${error.message}`
                         ).join('\n');
-                        alert(`验证失败：\n${errorMessages}`);
+                        setToast({
+                            message: `验证失败：${errorMessages}`,
+                            type: 'error'
+                        });
                     } else {
-                        alert(result.message || '提交失败，请重试');
+                        setToast({
+                            message: result.message || '提交失败，请重试',
+                            type: 'error'
+                        });
                     }
                 }
             } catch (error) {
                 console.error('提交标签数据时出错:', error);
-                alert('提交标签数据失败，请重试');
+                setToast({
+                    message: '提交标签数据失败，请重试',
+                    type: 'error'
+                });
             } finally {
                 setIsSubmitting(false);
             }
@@ -577,6 +601,13 @@ function App() {
                 <ImagePreview
                     imageUrl={previewImage}
                     onClose={() => setPreviewImage(null)}
+                />
+            )}
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
                 />
             )}
         </div>
