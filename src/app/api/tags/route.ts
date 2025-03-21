@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
-import { TagData, NoteTag } from '@/types';
+import { NoteTag } from '@/types';
 import { validateTagData } from '@/utils/validation';
 
 export async function POST(request: Request) {

@@ -39,7 +39,7 @@ function App() {
     const [error, setError] = useState<string | null>(null);
     const [allTagged, setAllTagged] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [showWarning, setShowWarning] = useState(false);
+    const [showWarning] = useState(false);
     const [notes, setNotes] = useState<Note[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
@@ -195,36 +195,7 @@ function App() {
         return tagData[currentNoteId]?.commentOpinions || [];
     };
 
-    // 检查当前笔记和评论是否都已添加标签（不修改状态）
-    const checkCurrentNoteTagged = () => {
-        if (!notes || !notes[noteId]) return false;
-        
-        // 检查笔记标签是否已添加
-        if (!noteOpinion) {
-            return false;
-        }
-
-        // 获取当前笔记的评论列表
-        const currentComments = notes[noteId].comments;
-
-        // 获取评论标签（从commentListRef获取当前状态，而不是从已保存的数据中获取）
-        const currentOpinions = commentListRef.current?.getCurrentOpinions() || [];
-
-        // 检查评论标签数量是否与评论数量一致，且都不为空
-        if (currentOpinions.length < currentComments.length) {
-            return false;
-        }
-
-        // 检查是否有空的评论标签
-        const emptyOpinions = currentOpinions.filter((opinion: string) => !opinion);
-        if (emptyOpinions.length > 0) {
-            return false;
-        }
-
-        return true;
-    };
-
-    // 用于UI交互的检查函数，会设置错误消息
+// 用于UI交互的检查函数，会设置错误消息
     const isCurrentNoteTagged = () => {
         if (!notes || !notes[noteId]) {
             setError("数据加载中，请稍候");
