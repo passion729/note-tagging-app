@@ -14,7 +14,7 @@ async function importTestData() {
         // 按顺序导入每个笔记及其评论
         for (const note of testNotes) {
             // 1. 插入笔记
-            const { data: noteData, error: noteError } = await supabase
+            const { error: noteError } = await supabase
                 .from('notes')
                 .insert({
                     id: note.id,
@@ -34,7 +34,7 @@ async function importTestData() {
             // 2. 插入评论
             for (const comment of note.comments) {
                 // 先插入评论
-                const { data: commentData, error: commentError } = await supabase
+                const { error: commentError } = await supabase
                     .from('comments')
                     .insert({
                         id: comment.id,
