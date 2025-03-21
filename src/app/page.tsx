@@ -114,8 +114,8 @@ function App() {
 
     // 预加载下一笔记的图片
     useEffect(() => {
-        if (noteId < testNotes.length - 1) {
-            preloadImages(testNotes[noteId + 1].image_list);
+        if (noteId < notes.length - 1) {
+            preloadImages(notes[noteId + 1].image_list);
         }
     }, [noteId]);
 
@@ -133,7 +133,7 @@ function App() {
     }, []);
 
     const handleCommentSubmit = (opinions: string[]) => {
-        const currentNoteId = testNotes[noteId].id;
+        const currentNoteId = notes[noteId].id;
 
         // 获取当前笔记的现有标签数据
         const currentNoteData = tagData[currentNoteId] || {
@@ -158,14 +158,14 @@ function App() {
         setTagData(newTagData);
 
         // 如果所有笔记都已标记，可以提交到服务器
-        if (isAllNotesTagged(newTagData, testNotes.length)) {
+        if (isAllNotesTagged(newTagData, notes.length)) {
             // TODO: 调用API提交数据
         }
     };
 
     // 获取当前笔记的已保存评论标签
     const getCurrentNoteSavedOpinions = () => {
-        const currentNoteId = testNotes[noteId].id;
+        const currentNoteId = notes[noteId].id;
         return tagData[currentNoteId]?.commentOpinions || [];
     };
 
@@ -177,7 +177,7 @@ function App() {
         }
 
         // 获取当前笔记的评论列表
-        const currentComments = testNotes[noteId].comments;
+        const currentComments = notes[noteId].comments;
 
         // 获取评论标签（从commentListRef获取当前状态，而不是从已保存的数据中获取）
         const currentOpinions = commentListRef.current?.getCurrentOpinions() || [];
@@ -206,7 +206,7 @@ function App() {
 
         // 获取当前笔记的评论标签
         const currentOpinions = commentListRef.current?.getCurrentOpinions() || [];
-        const currentComments = testNotes[noteId].comments;
+        const currentComments = notes[noteId].comments;
 
         // 检查评论标签数量是否与评论数量一致
         if (currentOpinions.length !== currentComments.length) {
@@ -247,7 +247,7 @@ function App() {
     const isAllTagged = () => {
         // 获取当前笔记的评论标签
         const currentOpinions = commentListRef.current?.getCurrentOpinions() || [];
-        const currentComments = testNotes[noteId].comments;
+        const currentComments = notes[noteId].comments;
 
         // 检查当前笔记
         // 1. 检查笔记标签是否已添加
@@ -268,8 +268,8 @@ function App() {
         // 构建包含当前笔记标签的完整标签数据
         const completeTagData: TagData = {
             ...tagData,
-            [testNotes[noteId].id]: {
-                noteId: testNotes[noteId].id,
+            [notes[noteId].id]: {
+                noteId: notes[noteId].id,
                 noteOpinion,
                 commentOpinions: currentOpinions
             }
@@ -277,13 +277,13 @@ function App() {
 
         // 检查是否已为所有笔记添加标签
         const taggedNoteIds = Object.keys(completeTagData);
-        if (taggedNoteIds.length < testNotes.length) {
+        if (taggedNoteIds.length < notes.length) {
             return false;
         }
 
         // 检查每个笔记是否都有有效标签
-        for (let i = 0; i < testNotes.length; i++) {
-            const note = testNotes[i];
+        for (let i = 0; i < notes.length; i++) {
+            const note = notes[i];
             const noteTagData = completeTagData[note.id];
 
             // 检查笔记是否有标签
@@ -306,12 +306,12 @@ function App() {
     };
 
     const handleNextNote = () => {
-        if (noteId < testNotes.length - 1) {
+        if (noteId < notes.length - 1) {
             // 获取当前笔记的评论标签
             const currentOpinions = commentListRef.current?.getCurrentOpinions() || [];
 
             // 保存当前笔记的标签数据
-            const currentNoteId = testNotes[noteId].id;
+            const currentNoteId = notes[noteId].id;
             const currentNoteData = tagData[currentNoteId] || {
                 noteId: currentNoteId,
                 noteOpinion: "",
@@ -330,7 +330,7 @@ function App() {
 
             // 计算下一笔记的ID
             const nextNoteIndex = noteId + 1;
-            const nextNoteId = testNotes[nextNoteIndex].id;
+            const nextNoteId = notes[nextNoteIndex].id;
 
             // 先保存数据
             setTagData(updatedTagData);
@@ -369,7 +369,7 @@ function App() {
             const currentOpinions = commentListRef.current?.getCurrentOpinions() || [];
 
             // 保存当前笔记的标签数据
-            const currentNoteId = testNotes[noteId].id;
+            const currentNoteId = notes[noteId].id;
             const currentNoteData = tagData[currentNoteId] || {
                 noteId: currentNoteId,
                 noteOpinion: "",
@@ -388,7 +388,7 @@ function App() {
 
             // 计算上一笔记的ID
             const prevNoteIndex = noteId - 1;
-            const prevNoteId = testNotes[prevNoteIndex].id;
+            const prevNoteId = notes[prevNoteIndex].id;
 
             // 先保存数据
             setTagData(updatedTagData);
@@ -432,8 +432,8 @@ function App() {
                 // 构建完整的标签数据，包含当前笔记的标签
                 const completeTagData: TagData = {
                     ...tagData,
-                    [testNotes[noteId].id]: {
-                        noteId: testNotes[noteId].id,
+                    [notes[noteId].id]: {
+                        noteId: notes[noteId].id,
                         noteOpinion: noteOpinion || "",
                         commentOpinions: currentOpinions
                     }
@@ -445,7 +445,10 @@ function App() {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(completeTagData),
+                    body: JSON.stringify({
+                        tagData: completeTagData,
+                        totalNotes: notes.length
+                    }),
                 });
 
                 const result = await response.json();
@@ -481,16 +484,10 @@ function App() {
 
     if (isLoading) {
         return (
-            <div className="flex items-center justify-center min-h-screen">
-                <div className="text-lg">正在获取笔记...</div>
-            </div>
-        );
-    }
-
-    if (error) {
-        return (
-            <div className="flex items-center justify-center min-h-screen">
-                <div className="text-error">{error}</div>
+            <div className="min-h-screen w-screen flex items-center justify-center p-8">
+                <div className="w-full max-w-[1400px] min-w-[1200px] h-[900px] max-h-[90vh] min-h-[900px] flex items-center justify-center bg-base-100 rounded-lg shadow-lg">
+                    <div className="text-lg">正在获取笔记...</div>
+                </div>
             </div>
         );
     }
@@ -551,10 +548,12 @@ function App() {
                                 </div>
                                 <div className="h-full flex items-center">
                                     {error && (
-                                        <div className="text-error">{error}</div>
+                                        <div className="text-sm text-error bg-error/10 px-2 py-1 rounded">
+                                            {error}
+                                        </div>
                                     )}
                                     {showWarning && !error && (
-                                        <div className="text-error">
+                                        <div className="text-sm text-error bg-warning/10 px-2 py-1 rounded">
                                             {!noteOpinion ? "请先标记当前笔记" : "请先标记当前笔记的所有评论"}
                                         </div>
                                     )}
