@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { supabase } from '@/lib/supabase';
 import { TagData } from '@/types';
 import { validateTagData } from '@/utils/validation';
 
@@ -19,11 +20,22 @@ export async function POST(request: Request) {
                 { status: 400 }
             );
         }
-        
-        // TODO: 这里添加数据库存储逻辑
-        
-        // 模拟API延迟
-        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        const noteId = parseInt(Object.keys(tagData)[0]);
+        const noteData = tagData[noteId];
+
+        // 插入标签数据
+        const { error: tagDataError } = await supabase
+            .from('tag_data')
+            .insert({
+                note_id: noteId,
+                note_opinion: noteData.noteOpinion,
+                comment_opinions: noteData.commentOpinions
+            });
+
+        if (tagDataError) {
+            throw tagDataError;
+        }
         
         return NextResponse.json({ 
             success: true, 
