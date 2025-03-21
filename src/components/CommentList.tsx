@@ -1,4 +1,4 @@
-import TagButton from "./TagButton.tsx";
+import TagButton from "./TagButton";
 import { useForm } from "react-hook-form";
 import { useState, useImperativeHandle, forwardRef, useEffect } from "react";
 
@@ -12,6 +12,8 @@ interface Props {
     comments: Comment[];
     onSubmit?: (opinions: string[]) => void;
     savedOpinions?: string[];
+    showWarning?: boolean;
+    noteOpinion?: string;
 }
 
 interface FormData {
@@ -25,7 +27,7 @@ export interface CommentListRef {
     setOpinions: (opinions: string[]) => void;
 }
 
-const CommentList = forwardRef<CommentListRef, Props>(({ comments, onSubmit, savedOpinions = [] }, ref) => {
+const CommentList = forwardRef<CommentListRef, Props>(({ comments, onSubmit, savedOpinions = [], showWarning = false, noteOpinion = "" }, ref) => {
     const [opinions, setOpinions] = useState<string[]>(savedOpinions);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { handleSubmit } = useForm<FormData>();
@@ -61,16 +63,6 @@ const CommentList = forwardRef<CommentListRef, Props>(({ comments, onSubmit, sav
         }, 3000);
     };
 
-    const reset = () => {
-        console.log("CommentList - 重置所有评论标签");
-        setOpinions(new Array(comments.length).fill(""));
-        setIsSubmitting(false);
-    };
-
-    const getCurrentOpinions = () => {
-        return opinions;
-    };
-
     useImperativeHandle(ref, () => ({
         reset: () => {
             setOpinions([]);
@@ -87,20 +79,22 @@ const CommentList = forwardRef<CommentListRef, Props>(({ comments, onSubmit, sav
     }));
 
     return (
-        <form onSubmit={handleSubmit(onFormSubmit)} className="h-full w-full">
+        <form onSubmit={handleSubmit(onFormSubmit)} className="h-full w-full flex flex-col justify-between items-center">
             <ul>
-                {comments.map((comment, id) => (
+                {comments.map((comment, index) => (
                     <li key={comment.id}>
                         <div className="flex flex-row justify-between items-center space-x-4 pr-1">
                             <div className="w-full leading-7 px-1">
                                 {comment.content}
                             </div>
-                            <TagButton 
-                                value={opinions[id]} 
-                                onChange={(value) => handleOpinionChange(id, value)} 
-                            />
+                            <div className="flex gap-2">
+                                <TagButton
+                                    value={opinions[index]}
+                                    onChange={(value) => handleOpinionChange(index, value)}
+                                />
+                            </div>
                         </div>
-                        {id+1 !== comments.length && <div className="divider my-[1px]" />}
+                        {index + 1 !== comments.length && <div className="divider my-[1px]" />}
                     </li>
                 ))}
             </ul>

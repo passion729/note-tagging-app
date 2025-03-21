@@ -22,6 +22,7 @@ const preloadImages = (imageUrls: string[]) => {
 };
 
 // 在文件顶部添加防抖函数
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 const debounce = (func: Function, wait: number) => {
     let timeout: ReturnType<typeof setTimeout>;
     return function(...args: never[]) {
@@ -39,6 +40,7 @@ function App() {
     const [error, setError] = useState<string | null>(null);
     const [allTagged, setAllTagged] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showWarning, setShowWarning] = useState(false);
 
     // 加载已保存的标签数据
     useEffect(() => {
@@ -446,12 +448,26 @@ function App() {
                                         setTimeout(() => setIsSubmitting(false), 500);
                                     }}
                                     savedOpinions={getCurrentNoteSavedOpinions()}
+                                    showWarning={showWarning}
                                 />
                             </div>
-                            {error && (
-                                <div className="text-error text-center mt-2">{error}</div>
-                            )}
-                            <div className="h-16 mt-4 flex items-center justify-end shrink-0">
+                            <div className="h-8 flex flex-row justify-between items-center mt-2">
+                                <div className="text-sm text-gray-600 dark:text-gray-400">
+                                    {!noteOpinion ? "笔记未标记" : "笔记已标记"} | 
+                                    评论已标记 {getCurrentNoteSavedOpinions().filter(opinion => opinion).length}/{testNotes[noteId].comments.length}
+                                </div>
+                                <div className="h-full flex items-center">
+                                    {error && (
+                                        <div className="text-error">{error}</div>
+                                    )}
+                                    {showWarning && !error && (
+                                        <div className="text-error">
+                                            {!noteOpinion ? "请先标记当前笔记" : "请先标记当前笔记的所有评论"}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                            <div className="h-16 mt-4 flex items-center justify-end shrink-0 place-self-end">
                                 <NoteSwitcher
                                     previousNoteHandler={handlePreviousNote}
                                     nextNoteHandler={handleNextNote}
