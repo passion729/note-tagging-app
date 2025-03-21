@@ -9,7 +9,7 @@ import Title from "@/components/Title";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { NoteSwitcher } from "@/components/NoteSwitcher";
 import { useState, useRef, useEffect } from "react";
-import { TagData } from "@/types";
+import { TagData, Note } from "@/types";
 import { saveTagData, isAllNotesTagged, clearTagData } from "@/utils/storage";
 import ImagePreview from "@/components/ImagePreview";
 
@@ -41,6 +41,48 @@ function App() {
     const [allTagged, setAllTagged] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [showWarning, setShowWarning] = useState(false);
+    const [notes, setNotes] = useState<Note[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    // 获取笔记列表
+    const fetchNotes = async () => {
+        try {
+            setIsLoading(true);
+            setError(null);
+            
+            console.log('开始获取笔记列表...');
+            const response = await fetch('/api/notes');
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const contentType = response.headers.get('content-type');
+            if (!contentType || !contentType.includes('application/json')) {
+                throw new Error('服务器返回的不是 JSON 数据');
+            }
+            
+            const result = await response.json();
+            console.log('获取到的笔记数据:', result);
+
+            if (result.success) {
+                setNotes(result.data);
+                console.log('成功设置笔记数据');
+            } else {
+                throw new Error(result.message || '获取笔记列表失败');
+            }
+        } catch (error) {
+            console.error('获取笔记列表失败:', error);
+            setError(error instanceof Error ? error.message : '获取笔记列表失败，请刷新页面重试');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    // 组件加载时获取笔记列表
+    useEffect(() => {
+        fetchNotes();
+    }, []);
 
     // 加载已保存的标签数据
     useEffect(() => {
@@ -437,11 +479,27 @@ function App() {
         }
     };
 
+    if (isLoading) {
+        return (
+            <div className="flex items-center justify-center min-h-screen">
+                <div className="text-lg">加载中...</div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="flex items-center justify-center min-h-screen">
+                <div className="text-error">{error}</div>
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen w-screen flex items-center justify-center p-8">
             <div className="w-full max-w-[1400px] min-w-[1200px] h-[900px] max-h-[90vh] min-h-[900px] flex flex-col bg-base-100 rounded-lg shadow-lg">
                 <div className="flex justify-between items-center mb-2 px-8 pt-8">
-                    <Title title={testNotes[noteId].title} tags={testNotes[noteId].tags} />
+                    <Title title={notes[noteId].title} tags={notes[noteId].tags} />
                     <div className="ml-32">
                         <ThemeSwitcher />
                     </div>
@@ -453,10 +511,10 @@ function App() {
                     <div className="flex flex-col w-1/2 pr-4">
                         <div className="flex flex-col h-full">
                             <div>
-                                <Images images={testNotes[noteId].image_list} />
+                                <Images images={notes[noteId].image_list} />
                             </div>
                             <div className="flex-grow overflow-y-auto mt-2">
-                                <NoteContent content={testNotes[noteId].content} />
+                                <NoteContent content={notes[noteId].content} />
                             </div>
                             <div className="h-16 mt-4 flex items-center justify-center shrink-0">
                                 <div className="w-3/5 h-11">
@@ -476,7 +534,7 @@ function App() {
                             <div className="flex-grow overflow-y-auto">
                                 <CommentList
                                     ref={commentListRef}
-                                    comments={testNotes[noteId].comments}
+                                    comments={notes[noteId].comments}
                                     onSubmit={(opinions) => {
                                         setIsSubmitting(true);
                                         handleCommentSubmit(opinions);
@@ -489,7 +547,7 @@ function App() {
                             <div className="h-8 flex flex-row justify-between items-center mt-2">
                                 <div className="text-sm text-gray-600 dark:text-gray-400">
                                     {!noteOpinion ? "笔记未标记" : "笔记已标记"} | 
-                                    评论已标记 {getCurrentNoteSavedOpinions().filter(opinion => opinion).length}/{testNotes[noteId].comments.length}
+                                    评论已标记 {getCurrentNoteSavedOpinions().filter(opinion => opinion).length}/{notes[noteId].comments.length}
                                 </div>
                                 <div className="h-full flex items-center">
                                     {error && (
@@ -508,7 +566,7 @@ function App() {
                                     nextNoteHandler={handleNextNote}
                                     submitHandler={handleSubmit}
                                     currentId={noteId + 1}
-                                    totalNum={testNotes.length}
+                                    totalNum={notes.length}
                                     submitDisabled={!allTagged || isSubmitting}
                                 />
                             </div>
@@ -525,5 +583,5 @@ function App() {
         </div>
     );
 }
-
 export default App;
+

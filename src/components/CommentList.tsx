@@ -1,12 +1,7 @@
 import TagButton from "./TagButton";
 import { useForm } from "react-hook-form";
 import { useState, useImperativeHandle, forwardRef, useEffect } from "react";
-
-interface Comment {
-    id: number;
-    content: string;
-    opinion: string;
-}
+import { Comment } from "@/types";
 
 interface Props {
     comments: Comment[];
@@ -82,7 +77,7 @@ const CommentList = forwardRef<CommentListRef, Props>(({ comments, onSubmit, sav
         <form onSubmit={handleSubmit(onFormSubmit)} className="h-full w-full flex flex-col justify-between items-center">
             <ul>
                 {comments.map((comment, index) => (
-                    <li key={comment.id}>
+                    <li key={index}>
                         <div className="flex flex-row justify-between items-center space-x-4 pr-1">
                             <div className="w-full leading-7 px-1">
                                 {comment.content}
