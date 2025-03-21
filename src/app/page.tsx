@@ -379,26 +379,61 @@ function App() {
         }
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!isSubmitting && allTagged) {
-            // 获取当前笔记的评论标签
-            const currentOpinions = commentListRef.current?.getCurrentOpinions() || [];
+            try {
+                setIsSubmitting(true);
+                
+                // 获取当前笔记的评论标签
+                const currentOpinions = commentListRef.current?.getCurrentOpinions() || [];
 
-            // 构建完整的标签数据，包含当前笔记的标签
-            const completeTagData: TagData = {
-                ...tagData,
-                [testNotes[noteId].id]: {
-                    noteId: testNotes[noteId].id,
-                    noteOpinion: noteOpinion || "",
-                    commentOpinions: currentOpinions
+                // 构建完整的标签数据，包含当前笔记的标签
+                const completeTagData: TagData = {
+                    ...tagData,
+                    [testNotes[noteId].id]: {
+                        noteId: testNotes[noteId].id,
+                        noteOpinion: noteOpinion || "",
+                        commentOpinions: currentOpinions
+                    }
+                };
+
+                // 调用API提交数据
+                const response = await fetch('/api/tags', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(completeTagData),
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // 提交成功，清除本地存储的数据
+                    clearTagData();
+                    // 重置状态
+                    setTagData({});
+                    setNoteOpinion("");
+                    commentListRef.current?.reset();
+                    // 显示成功消息
+                    alert('标签数据提交成功！');
+                } else {
+                    // 处理验证错误
+                    if (result.errors && Array.isArray(result.errors)) {
+                        const errorMessages = result.errors.map((error: { field: string; message: string }) => 
+                            `${error.field}: ${error.message}`
+                        ).join('\n');
+                        alert(`验证失败：\n${errorMessages}`);
+                    } else {
+                        alert(result.message || '提交失败，请重试');
+                    }
                 }
-            };
-
-            // 提交所有标签数据
-            console.log("提交所有标签数据:", completeTagData);
-            // TODO: 调用API提交数据
-            setIsSubmitting(true);
-            setTimeout(() => setIsSubmitting(false), 3000);
+            } catch (error) {
+                console.error('提交标签数据时出错:', error);
+                alert('提交标签数据失败，请重试');
+            } finally {
+                setIsSubmitting(false);
+            }
         }
     };
 
