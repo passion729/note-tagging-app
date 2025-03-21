@@ -482,7 +482,7 @@ function App() {
     if (isLoading) {
         return (
             <div className="flex items-center justify-center min-h-screen">
-                <div className="text-lg">加载中...</div>
+                <div className="text-lg">正在获取笔记...</div>
             </div>
         );
     }

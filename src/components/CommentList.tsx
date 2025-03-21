@@ -75,10 +75,10 @@ const CommentList = forwardRef<CommentListRef, Props>(({ comments, onSubmit, sav
 
     return (
         <form onSubmit={handleSubmit(onFormSubmit)} className="h-full w-full flex flex-col justify-between items-center">
-            <ul>
+            <ul className="w-full">
                 {comments.map((comment, index) => (
                     <li key={index}>
-                        <div className="flex flex-row justify-between items-center space-x-4 pr-1">
+                        <div className="flex flex-row justify-between items-center space-x-4 pr-1 w-full">
                             <div className="w-full leading-7 px-1">
                                 {comment.content}
                             </div>
