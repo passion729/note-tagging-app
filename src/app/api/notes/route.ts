@@ -42,45 +42,27 @@ export async function GET() {
             );
         }
 
-        // 获取所有 opinions
-        const { data: opinions, error: opinionsError } = await supabase
-            .from('opinions')
-            .select('*');
-
-        if (opinionsError) {
-            return NextResponse.json(
-                {
-                    success: false,
-                    message: `获取opinions失败: ${opinionsError.message}`,
-                    error: opinionsError.message
-                },
-                { status: 500 }
-            );
-        }
 
         // 转换数据格式以匹配前端需求
         const formattedNotes = notes.map(note => {
             // 获取笔记的 opinion
-            const noteOpinion = opinions?.find(o => o.note_id === note.id && o.comment_id === null);
-            
+
             // 获取评论的 opinions
-            const commentOpinions = opinions?.filter(o => o.note_id === note.id && o.comment_id !== null) || [];
 
             return {
                 id: note.id,
                 title: note.title,
                 content: note.content,
                 tags: note.tags || [],
-                comments: (note.comments || []).map((comment: any) => {
-                    const commentOpinion = commentOpinions.find(o => o.comment_id === comment.id);
+                comments: (note.comments || []).map((comment) => {
                     return {
                         id: comment.id,
                         content: comment.content,
-                        opinion: commentOpinion?.opinion || null
+                        opinion: ""
                     };
                 }),
                 image_list: note.image_list || [],
-                opinion: noteOpinion?.opinion || 'neutral'
+                opinion: ""
             };
         });
 

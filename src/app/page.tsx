@@ -1,6 +1,5 @@
 "use client"
 
-import { testNotes } from "@/data/data";
 import NoteContent from "@/components/NoteContent";
 import Images from "@/components/Images";
 import TagButton from "@/components/TagButton";
