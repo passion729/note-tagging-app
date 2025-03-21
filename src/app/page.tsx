@@ -15,11 +15,9 @@ import ImagePreview from "@/components/ImagePreview";
 import { Toast } from '@/components/Toast';
 
 // 图片预加载函数
-const preloadImages = (imageUrls: string[]) => {
-    imageUrls.forEach(url => {
-        const img = new Image();
-        img.src = url;
-    });
+const preloadImage = (url: string) => {
+    const img = new Image();
+    img.src = url;
 };
 
 // 在文件顶部添加防抖函数
@@ -110,12 +108,41 @@ function App() {
         return () => clearInterval(interval);
     }, [noteId, noteOpinion, tagData]); // 添加所有相关依赖
 
-    // 预加载下一笔记的图片
+    // 预加载当前笔记的图片
     useEffect(() => {
-        if (noteId < notes.length - 1) {
-            preloadImages(notes[noteId + 1].image_list);
+        if (notes && notes[noteId]) {
+            // 预加载当前笔记的图片
+            notes[noteId].image_list.forEach(preloadImage);
+
+            // 预加载下一笔记的图片
+            if (noteId < notes.length - 1) {
+                notes[noteId + 1].image_list.forEach(preloadImage);
+            }
+
+            // 预加载上一笔记的图片
+            if (noteId > 0) {
+                notes[noteId - 1].image_list.forEach(preloadImage);
+            }
         }
-    }, [noteId]);
+    }, [noteId, notes]);
+
+    // 后台预加载所有笔记的图片
+    useEffect(() => {
+        if (notes) {
+            // 创建一个 Set 来存储已加载的图片 URL，避免重复加载
+            const loadedImages = new Set<string>();
+
+            // 预加载所有笔记的图片
+            notes.forEach(note => {
+                note.image_list.forEach(url => {
+                    if (!loadedImages.has(url)) {
+                        preloadImage(url);
+                        loadedImages.add(url);
+                    }
+                });
+            });
+        }
+    }, [notes]);
 
     useEffect(() => {
         const handleBeforeUnload = (e: BeforeUnloadEvent) => {
