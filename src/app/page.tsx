@@ -495,6 +495,8 @@ function App() {
                     setTagData({});
                     setNoteOpinion("");
                     commentListRef.current?.reset();
+                    // 重置到第一篇笔记
+                    setNoteId(0);
                     // 显示成功消息
                     setToast({
                         message: '标签数据提交成功！',
