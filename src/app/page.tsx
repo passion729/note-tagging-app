@@ -13,6 +13,7 @@ import { saveTagData, isAllNotesTagged, clearTagData } from "@/utils/storage";
 import ImagePreview from "@/components/ImagePreview";
 import { Toast } from '@/components/Toast';
 import LoadingOverlay from "@/components/LoadingOverlay";
+import { debounce } from "@/lib/utils";
 
 // 图片预加载函数
 const preloadImage = (url: string) => {
@@ -21,14 +22,7 @@ const preloadImage = (url: string) => {
 };
 
 // 在文件顶部添加防抖函数
-// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-const debounce = (func: Function, wait: number) => {
-    let timeout: ReturnType<typeof setTimeout>;
-    return function(...args: never[]) {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func(...args), wait);
-    };
-};
+
 
 function App() {
     const [noteId, setNoteId] = useState(0);

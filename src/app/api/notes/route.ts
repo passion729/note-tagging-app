@@ -45,10 +45,6 @@ export async function GET() {
 
         // 转换数据格式以匹配前端需求
         const formattedNotes = notes.map(note => {
-            // 获取笔记的 opinion
-
-            // 获取评论的 opinions
-
             return {
                 id: note.id,
                 title: note.title,
